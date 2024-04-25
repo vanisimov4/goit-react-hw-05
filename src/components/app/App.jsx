@@ -1,10 +1,43 @@
+import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
+
+import HomePage from '../../pages/homePage/HomePage';
+import MoviesPage from '../../pages/moviesPage/MoviesPage';
+import MovieDetailsPage from '../../pages/movieDetailsPage/MovieDetailsPage';
+
 import './App.css';
 
 function App() {
   const [count, setCount] = useState(0);
 
-  return <>rr</>;
+  const url =
+    'https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1';
+
+  const options = {
+    headers: {
+      // Замість api_read_access_token вставте свій токен
+      Authorization: 'Bearer api_read_access_token',
+    },
+  };
+
+  axios
+    .get(url, options)
+    .then(response => console.log(response))
+    .catch(err => console.error(err));
+
+  return (
+    <>
+      rr
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/movies" element={<MoviesPage />} />
+        <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
+        <Route path="/movies/:movieId/cast" element={<MovieCast />} />
+        <Route path="/movies/:movieId/reviews" element={<MovieReviews />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
