@@ -1,11 +1,14 @@
 import axios from 'axios';
-import { Routes, Route, NavLink } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
+// import clsx from 'clsx';
+import Navigation from '../navigation/Navigation';
 import HomePage from '../../pages/homePage/HomePage';
 import MoviesPage from '../../pages/moviesPage/MoviesPage';
 import MovieDetailsPage from '../../pages/movieDetailsPage/MovieDetailsPage';
 import NotFoundPage from '../../pages/notFoundPage/NotFoundPage';
+import MovieCast from '../movieCast/MovieCast';
+import MovieReviews from '../movieReviews/MovieReviews';
 
 import css from './App.module.css';
 
@@ -32,16 +35,14 @@ function App() {
 
   return (
     <>
-      <nav className={css.nav}>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/movies">Movies</NavLink>
-      </nav>
+      <Navigation />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
         <Route path="/movies/:movieId" element={<MovieDetailsPage />} />
-        {/* <Route path="/movies/:movieId/cast" element={<MovieCast />} />
-        <Route path="/movies/:movieId/reviews" element={<MovieReviews />} /> */}
+        <Route path="/movies/:movieId/cast" element={<MovieCast />} />
+        <Route path="/movies/:movieId/reviews" element={<MovieReviews />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
