@@ -1,7 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 // import clsx from 'clsx';
+import { fetchTrendMovies } from '../../tmdb-api';
 import Navigation from '../navigation/Navigation';
 import HomePage from '../../pages/homePage/HomePage';
 import MoviesPage from '../../pages/moviesPage/MoviesPage';
@@ -15,28 +16,14 @@ import css from './App.module.css';
 function App() {
   const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    const url =
-      'https://api.themoviedb.org/3/trending/movie/day?language=en-US';
-
-    const options = {
-      headers: {
-        // Замість api_read_access_token вставте свій токен
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNjVmODljNGY3NDNlNzk1ZGRjNTA4MDcwOWE4MTM1MyIsInN1YiI6IjY2MmFiNWY5Y2FhNTA4MDExZjFmZDY3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.srHgBAS3neJgJA4CdS77idqDffTlwx1H7umAWFf5nMg',
-      },
-    };
-
-    axios
-      .get(url, options)
-      .then(response => console.log(response))
-      .catch(err => console.error(err));
-  }, []);
+  // useEffect(() => {
+  //   fetchTrendMovies();
+  // }, []);
 
   return (
     <>
       <Navigation />
-
+      <hr></hr>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/movies" element={<MoviesPage />} />
