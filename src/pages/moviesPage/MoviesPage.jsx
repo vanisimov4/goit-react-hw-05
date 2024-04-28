@@ -1,7 +1,26 @@
 import toast, { Toaster } from 'react-hot-toast';
+import { useEffect, useState } from 'react';
+
+import { fetchSearchMovies } from '../../tmdb-api';
+import MovieList from '../../components/movieList/MovieList';
 import css from './MoviesPage.module.css';
 
-const MoviesPage = ({ onSubmit }) => {
+const MoviesPage = () => {
+  const [movies, setMovies] = useState([]);
+  const [query, setQuery] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await fetchSearchMovies(query);
+        setMovies(result);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [query]);
+
   const handleSubmit = evt => {
     evt.preventDefault();
 
@@ -10,7 +29,8 @@ const MoviesPage = ({ onSubmit }) => {
     if (textSearch === '') {
       return toast.error('text must be entered to search for movies');
     }
-    onSubmit(textSearch);
+    console.log(textSearch);
+    setQuery(textSearch);
     form.reset();
   };
 
@@ -21,6 +41,7 @@ const MoviesPage = ({ onSubmit }) => {
         <button type="submit">Search</button>
         <Toaster position="top-right" reverseOrder={false} />
       </form>
+      <MovieList movies={movies} />
     </>
   );
 };

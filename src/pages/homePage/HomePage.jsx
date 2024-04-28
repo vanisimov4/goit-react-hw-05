@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchTrendMovies } from '../../tmdb-api';
+import MovieList from '../../components/movieList/MovieList';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -9,7 +10,6 @@ const HomePage = () => {
     async function fetchData() {
       try {
         const result = await fetchTrendMovies();
-        console.log(result);
         setMovies(result);
       } catch (error) {
         console.log(error);
@@ -21,11 +21,7 @@ const HomePage = () => {
   return (
     <>
       <h2>Trending today</h2>
-      <ul>
-        {movies.map(item => (
-          <li key={item.id}>{item.title}</li>
-        ))}
-      </ul>
+      <MovieList movies={movies} />
     </>
   );
 };
