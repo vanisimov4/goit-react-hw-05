@@ -38,6 +38,7 @@ export async function fetchSearchMovies(query) {
 }
 
 export async function fetchMoviesById(Id) {
+  // const url = `https://api.themoviedb.org/3/movie?query=${Id}&language=en-US`;
   const url = `https://api.themoviedb.org/3/movie/${Id}?language=en-US`;
 
   const options = {
@@ -46,7 +47,7 @@ export async function fetchMoviesById(Id) {
         'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNjVmODljNGY3NDNlNzk1ZGRjNTA4MDcwOWE4MTM1MyIsInN1YiI6IjY2MmFiNWY5Y2FhNTA4MDExZjFmZDY3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.srHgBAS3neJgJA4CdS77idqDffTlwx1H7umAWFf5nMg',
     },
   };
-  // console.log(response);
   const response = await axios.get(url, options);
-  return response.data.results;
+  console.log(response.data);
+  return response.data;
 }
