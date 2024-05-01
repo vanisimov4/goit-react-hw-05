@@ -20,19 +20,16 @@ const MovieDetailsPage = () => {
         const genres = result.genres.map(function (item) {
           return item.name;
         });
-        console.log(genres);
         setMovieGenre(genres.join(', '));
-        const dateString = movie.release_date;
-        const dateObject = new Date(dateString);
-        const year = dateObject.getFullYear();
+        const dateObject = new Date(movie.release_date);
         setMovieYear(dateObject.getFullYear());
-        console.log(year);
+        // console.log(dateObject.getFullYear());
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [movieId]);
+  }, [movieId, movieYear]);
 
   return (
     <>
@@ -40,6 +37,8 @@ const MovieDetailsPage = () => {
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
+          width="30%"
+          height="30%"
         />
         <div>
           <h2>
