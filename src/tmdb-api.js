@@ -38,8 +38,35 @@ export async function fetchSearchMovies(query) {
 }
 
 export async function fetchMoviesById(Id) {
-  // const url = `https://api.themoviedb.org/3/movie?query=${Id}&language=en-US`;
   const url = `https://api.themoviedb.org/3/movie/${Id}?language=en-US`;
+
+  const options = {
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNjVmODljNGY3NDNlNzk1ZGRjNTA4MDcwOWE4MTM1MyIsInN1YiI6IjY2MmFiNWY5Y2FhNTA4MDExZjFmZDY3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.srHgBAS3neJgJA4CdS77idqDffTlwx1H7umAWFf5nMg',
+    },
+  };
+  const response = await axios.get(url, options);
+  return response.data;
+}
+
+export async function fetchCreditsById(Id) {
+  const url = `https://api.themoviedb.org/3/movie/${Id}/credits?language=en-US`;
+
+  const options = {
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyNjVmODljNGY3NDNlNzk1ZGRjNTA4MDcwOWE4MTM1MyIsInN1YiI6IjY2MmFiNWY5Y2FhNTA4MDExZjFmZDY3NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.srHgBAS3neJgJA4CdS77idqDffTlwx1H7umAWFf5nMg',
+    },
+  };
+  const response = await axios.get(url, options);
+  console.log(response.data.cast);
+  return response.data.cast;
+}
+
+export async function fetchReviewsById(Id) {
+  // const url = `https://api.themoviedb.org/3/movie/1228891/reviews?language=en-US&page=1`;
+  const url = `https://api.themoviedb.org/3/movie/${Id}/reviews?language=en-US`;
 
   const options = {
     headers: {

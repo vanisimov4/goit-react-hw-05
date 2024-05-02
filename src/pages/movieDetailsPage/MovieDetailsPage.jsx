@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 
 import { fetchMoviesById } from '../../tmdb-api';
 import css from './MovieDetailsPage.module.css';
@@ -37,8 +37,8 @@ const MovieDetailsPage = () => {
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
-          width="30%"
-          height="30%"
+          width="25%"
+          height="25%"
         />
         <div>
           <h2>
@@ -52,6 +52,18 @@ const MovieDetailsPage = () => {
           <h2>movie - - {movieId}</h2>
         </div>
       </div>
+      <hr></hr>
+      <p>Additional information</p>
+      <ul>
+        <li>
+          <Link to="cast">Cast</Link>
+        </li>
+        <li>
+          <Link to="reviews">Reviews</Link>
+        </li>
+      </ul>
+      <hr></hr>
+      <Outlet />
     </>
   );
 };
