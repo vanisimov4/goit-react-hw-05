@@ -33,6 +33,7 @@ const MovieDetailsPage = () => {
 
   return (
     <>
+      <button>Go back</button>
       <div className={css.wrapper}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
