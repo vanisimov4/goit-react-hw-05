@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 
 import { fetchMoviesById } from '../../tmdb-api';
 import css from './MovieDetailsPage.module.css';
@@ -8,8 +8,16 @@ const MovieDetailsPage = () => {
   const [movie, setMovie] = useState([]);
   const [movieGenre, setMovieGenre] = useState();
   const [movieYear, setMovieYear] = useState();
+  const [backLinkHref, setBackLinkHref] = useState();
 
   const { movieId } = useParams();
+  const location = useLocation();
+  console.log(location.state);
+  // console.log(location);
+
+  useEffect(() => {
+    setBackLinkHref(location.state ?? '/movies');
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,7 +31,6 @@ const MovieDetailsPage = () => {
         setMovieGenre(genres.join(', '));
         const dateObject = new Date(movie.release_date);
         setMovieYear(dateObject.getFullYear());
-        // console.log(dateObject.getFullYear());
       } catch (error) {
         console.log(error);
       }
@@ -33,7 +40,7 @@ const MovieDetailsPage = () => {
 
   return (
     <>
-      <button>Go back</button>
+      <Link to={backLinkHref}>Go back</Link>
       <div className={css.wrapper}>
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

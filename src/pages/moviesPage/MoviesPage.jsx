@@ -12,7 +12,6 @@ const MoviesPage = () => {
   const searchMovie = searchParams.get('query');
 
   useEffect(() => {
-    console.log(searchMovie);
     if (searchMovie === null) return;
     async function fetchData() {
       try {
