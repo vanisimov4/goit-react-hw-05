@@ -1,20 +1,28 @@
 // import axios from 'axios';
-import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Routes, Route } from "react-router-dom";
+import { Suspense, lazy } from "react";
 // import clsx from 'clsx';
-import { fetchTrendMovies } from '../../tmdb-api';
-import Navigation from '../navigation/Navigation';
-import HomePage from '../../pages/homePage/HomePage';
-import MoviesPage from '../../pages/moviesPage/MoviesPage';
-import MovieDetailsPage from '../../pages/movieDetailsPage/MovieDetailsPage';
-import NotFoundPage from '../../pages/notFoundPage/NotFoundPage';
-import MovieCast from '../movieCast/MovieCast';
-import MovieReviews from '../movieReviews/MovieReviews';
+// import { fetchTrendMovies } from "../../tmdb-api";
+import Navigation from "../navigation/Navigation";
+import NotFoundPage from "../../pages/notFoundPage/NotFoundPage";
 
-import css from './App.module.css';
+const HomePage = lazy(() => import("../../pages/homePage/HomePage"));
+const MoviesPage = lazy(() => import("../../pages/moviesPage/MoviesPage"));
+const MovieDetailsPage = lazy(() =>
+  import("../../pages/movieDetailsPage/MovieDetailsPage")
+);
+const MovieCast = lazy(() => import("../movieCast/MovieCast"));
+const MovieReviews = lazy(() => import("../../pages/moviesPage/MoviesPage"));
+// import HomePage from "../../pages/homePage/HomePage";
+// import MoviesPage from "../../pages/moviesPage/MoviesPage";
+// import MovieDetailsPage from "../../pages/movieDetailsPage/MovieDetailsPage";
+// import MovieCast from "../movieCast/MovieCast";
+// import MovieReviews from "../movieReviews/MovieReviews";
+
+// import css from "./App.module.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   // useEffect(() => {
   //   fetchTrendMovies();
@@ -24,15 +32,17 @@ function App() {
     <>
       <Navigation />
       <hr></hr>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/movies" element={<MoviesPage />} />
-        <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
-          <Route path="cast" element={<MovieCast />} />
-          <Route path="reviews" element={<MovieReviews />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+      <Suspense fallback={<div>Loading page...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<MovieCast />} />
+            <Route path="reviews" element={<MovieReviews />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

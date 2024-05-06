@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useState, Suspense } from "react";
+import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 
-import { fetchMoviesById } from '../../tmdb-api';
-import css from './MovieDetailsPage.module.css';
+import { fetchMoviesById } from "../../tmdb-api";
+import css from "./MovieDetailsPage.module.css";
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = useState([]);
@@ -16,7 +16,7 @@ const MovieDetailsPage = () => {
   // console.log(location);
 
   useEffect(() => {
-    setBackLinkHref(location.state ?? '/movies');
+    setBackLinkHref(location.state ?? "/movies");
   }, []);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const MovieDetailsPage = () => {
         const genres = result.genres.map(function (item) {
           return item.name;
         });
-        setMovieGenre(genres.join(', '));
+        setMovieGenre(genres.join(", "));
         const dateObject = new Date(movie.release_date);
         setMovieYear(dateObject.getFullYear());
       } catch (error) {
