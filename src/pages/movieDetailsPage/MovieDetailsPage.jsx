@@ -1,8 +1,8 @@
-import { useEffect, useState, Suspense } from "react";
-import { useParams, Link, Outlet, useLocation } from "react-router-dom";
+import { useEffect, useState, Suspense } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 
-import { fetchMoviesById } from "../../tmdb-api";
-import css from "./MovieDetailsPage.module.css";
+import { fetchMoviesById } from '../../tmdb-api';
+import css from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = useState([]);
@@ -12,11 +12,12 @@ const MovieDetailsPage = () => {
 
   const { movieId } = useParams();
   const location = useLocation();
-  console.log(location.state);
-  // console.log(location);
+
+  const defaultImg =
+    'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
 
   useEffect(() => {
-    setBackLinkHref(location.state ?? "/movies");
+    setBackLinkHref(location.state ?? '/movies');
   }, []);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const MovieDetailsPage = () => {
         const genres = result.genres.map(function (item) {
           return item.name;
         });
-        setMovieGenre(genres.join(", "));
+        setMovieGenre(genres.join(', '));
         const dateObject = new Date(movie.release_date);
         setMovieYear(dateObject.getFullYear());
       } catch (error) {
@@ -43,7 +44,11 @@ const MovieDetailsPage = () => {
       <Link to={backLinkHref}>Go back</Link>
       <div className={css.wrapper}>
         <img
-          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : defaultImg
+          }
           alt={movie.title}
           width="25%"
           height="25%"
@@ -57,7 +62,6 @@ const MovieDetailsPage = () => {
           <p>{movie.overview}</p>
           <h3>Genres</h3>
           <p>{movieGenre}</p>
-          <h2>movie - - {movieId}</h2>
         </div>
       </div>
       <hr></hr>
@@ -71,7 +75,9 @@ const MovieDetailsPage = () => {
         </li>
       </ul>
       <hr></hr>
-      <Outlet />
+      <Suspense fallback={<div>Loading subpage...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };

@@ -32,7 +32,7 @@ const MoviesPage = () => {
     if (textSearch === '') {
       return toast.error('text must be entered to search for movies');
     }
-    console.log(textSearch);
+
     setSearchParams({ query: textSearch });
     form.reset();
   };
